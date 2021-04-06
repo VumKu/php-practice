@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../bs&jq/bootstrap.css">
+
+</head>
+
+<body>
+
+    <pre id="result"></pre>
+
+    <script src="../bs&jq/jquery-3.6.0.js"></script>
+    <script src="../bs&jq/bootstrap.bundle.js"></script>
+    <script>
+        $.get('20210401-7-json.php', function (data) {
+            console.log(data)
+            $("#result").text(data);
+        }, 'json');
+    </script>
+</body>
+
+</html>

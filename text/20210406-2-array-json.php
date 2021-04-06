@@ -21,6 +21,9 @@ $person = [
 
 // header('Content-Type: application/json');
 
-echo json_encode($person, JSON_UNESCAPED_UNICODE);
+echo json_encode([
+    'get' => $_GET,
+    'person' => $person
+], JSON_UNESCAPED_UNICODE);
 
 //JSON_UNESCAPED_UNICODE是當你的陣列裡有中文的時候，為了預防中文字無法被處理(變成\u...的unicode格式)所以加上該語法，讓JSON不要編碼Unicode。

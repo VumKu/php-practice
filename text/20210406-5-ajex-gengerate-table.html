@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../bs&jq/bootstrap.css">
+
+</head>
+
+<body>
+
+    <button class="btn btn-primary" onclick="loadData()">Load</button>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+
+                <th scope="col">Name</th>
+                <th scope="col">Age</th>
+                <th scope="col">Gender</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script src="../bs&jq/jquery-3.6.0.js"></script>
+    <script src="../bs&jq/bootstrap.bundle.js"></script>
+    <script>
+
+        var rowTpl = o => {
+            return `
+            <tr>
+                <td>${o.name}</td>
+                <td>${o.age}</td>
+                <td>${o.gender}</td>
+            `
+        };
+
+        function loadData() {
+            $.get('20210401-7-json.php', function (data) {
+                console.log(data)
+
+                // $('tbody').append(rowTpl(data[0]))
+
+
+                data.forEach(el => {
+                    $('tbody').append(rowTpl(el));
+                });
+
+            }, 'json');
+
+
+        }
+
+    </script>
+</body>
+
+</html>
