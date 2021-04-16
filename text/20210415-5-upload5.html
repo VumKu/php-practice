@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <button class="btn btn-primary" onclick="avatar.click()">上傳</button>
+
+    <form name="form1" style="display: none;">
+        <input type="file" name="avatar" id="avatar">
+    </form>
+
+    <img id="myimg" src="" alt="">
+
+    <script src="../bs&jq/jquery-3.6.0.js"></script>
+    <script src="../bs&jq/bootstrap.bundle.js"></script>
+    <script>
+        const avatar = document.getElementById('avatar');
+
+        avatar.addEventListener('change', function () {
+            const fd = new FormData(document.form1);
+
+            fetch('20210415-3-upload3.php', {
+                method: 'POST',
+                body: fd
+            })
+                .then(r => r.json())
+                .then(obj => {
+                    if (obj.cuccess) {
+                        document.getElementById('myimg').src = 'imgs/' + obj.filename;
+                    }
+                })
+        })
+
+
+    </script>
+</body>
+
+</html>
