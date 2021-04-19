@@ -1,4 +1,5 @@
 <?php include __DIR__ . '/part-text/HTML/config.php'; ?>
+
 <?php
 $title = '列表';
 $pageName = 'ab-list';
@@ -22,6 +23,7 @@ $rows = $pdo->query($sql)->fetchAll();
 
 <?php include __DIR__ . '/part-text/HTML/html-head.php'; ?>
 <?php include __DIR__ . '/part-text/HTML/navbar.php'; ?>
+
 <div class="container">
     <div class="row">
         <div class="col">
@@ -95,6 +97,7 @@ $rows = $pdo->query($sql)->fetchAll();
 
 
 <?php include __DIR__ . '/part-text/HTML/scripts.php'; ?>
+
 <script>
     function delete_it(sid) {
         if (confirm(`確定要刪除編號為 ${sid} 的資料嗎?`)) {
@@ -111,4 +114,5 @@ $rows = $pdo->query($sql)->fetchAll();
     //     $(this).closest('tr').remove();
     // })
 </script>
+
 <?php include __DIR__ . '/part-text/HTML/html-foot.php'; ?>

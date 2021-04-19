@@ -1,10 +1,10 @@
 <?php
 $db_host = 'localhost';
 $db_name = 'mytest';
-$db_user = 'vumku';
-$db_pass = 'Touji';
+$db_user = 'root';
+$db_pass = 'Touji1231';
 
-// data source name
+// dsn = data source name
 $dsn = sprintf('mysql:host=%s;dbname=%s;charset=utf8', $db_host, $db_name);
 
 $pdo_options = [
@@ -12,6 +12,7 @@ $pdo_options = [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
 ];
+//PDO自己內建的參數陣列
 
 try {
     $pdo = new PDO($dsn, $db_user, $db_pass, $pdo_options);

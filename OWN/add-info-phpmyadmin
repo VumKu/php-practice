@@ -1,0 +1,31 @@
+
+
+原本新增一筆時，產生出的SQL敘述。
+
+
+INSERT INTO `address_book` 
+(`sid`, `name`, `email`, `mobile`, `address`) 
+
+VALUES 
+(NULL, 'Vum', 'ldxl3284@gmail.com', '0910110101', 'Taiwan'),
+
+
+------------------------------------------------------------------------------------------------
+
+
+如果有多筆資料，可以使用vs code等文字編輯器，將之前新增資料的 SQL 敘述複製貼上，再加以編寫。
+
+
+INSERT INTO `address_book` 
+(`sid`, `name`, `email`, `mobile`, `address`) 
+
+VALUES 
+(NULL, 'Vum', 'ldxl3284@gmail.com', '0910110101', 'Taiwan'),
+(NULL, 'Vum1', 'ldxl3284@gmail.com', '0910110101', 'Taiwan'),
+(NULL, 'Vum2', 'ldxl3284@gmail.com', '0910110101', 'Taiwan'),
+(NULL, 'Vum3', 'ldxl3284@gmail.com', '0910110101', 'Taiwan'),
+(NULL, 'Vum4', 'ldxl3284@gmail.com', '0910110101', 'Taiwan'),
+(NULL, 'Vum5', 'ldxl3284@gmail.com', '0910110101', 'Taiwan'),
+(NULL, 'Vum6', 'ldxl3284@gmail.com', '0910110101', 'Taiwan'),
+(NULL, 'Vum7', 'ldxl3284@gmail.com', '0910110101', 'Taiwan')
+
