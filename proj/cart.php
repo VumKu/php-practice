@@ -42,13 +42,29 @@ $pageName = 'cart';
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
                                 </td>
+
                                 <td>
                                     <img src="<?= WEB_ROOT ?>/proj/imgs/small/<?= $v['book_id'] ?>.jpg" class="card-img-top" alt="">
                                 </td>
+
                                 <td><?= $v['bookname'] ?></td>
-                                <td><?= $v['price'] ?></td>
-                                <td><?= $v['quantity'] ?></td>
-                                <td><?= $v['price'] * $v['quantity'] ?></td>
+
+                                <td class="price" data-price="<?= $v['price'] ?>"></td>
+
+                                <td>
+
+                                    <!-- <?= $v['quantity'] ?>
+                                <input type="number" value="<?= $v['quantity'] ?>">
+                                <br> -->
+                                    <select class="form-control quantity" onchange="changeQty(event)" data-qty=" <?= $v['quantity'] ?>">
+                                        <?php for ($i = 1; $i <= 10; $i++) : ?>
+                                            <option value="<?= $i ?>">
+                                                <?= $i ?>
+                                            </option>
+                                        <?php endfor; ?>
+                                    </select>
+                                </td>
+                                <td class="sub-total"></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -57,11 +73,38 @@ $pageName = 'cart';
 
         </div>
     </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-primary" role="alert">
+                總計: <span class="totalPrice"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <?php if (isset($_SESSION['user'])) : ?>
+                <a class="btn btn-success" href="cart-confirm.php">結帳</a>
+            <?php else : ?>
+                <div class="alert alert-danger" role="alert">
+                    請登入會員後再結帳
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+
 </div>
 
 <?php include __DIR__ . '/part-text/HTML/scripts.php'; ?>
 <script>
-    function deleteItem(event) {
+    const quantity = $('select.quantity');
+    // 金額轉換, 加逗號
+    const dallorCommas = function(n) {
+        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    };
+
+    const deleteItem = function(event) {
         let me = $(event.currentTarget);
         let sid = me.closest('tr').attr('data-sid');
 
@@ -71,14 +114,57 @@ $pageName = 'cart';
         }, function(data) {
             // location.reload();  // 刷頁面
 
-            showCartCount(data);
+            // showCartCount(data);
             me.closest('tr').remove();
 
             if ($('tbody>tr').length < 1) {
                 location.reload(); // 重新載入
             }
+            showCartCount(data);
+            calPrices();
         }, 'json');
 
-    }
+    };
+
+    //計算並呈現價格
+    const calPrices = function() {
+        let total = 0;
+        $('tbody>tr').each(function() {
+            const $price = $(this).find('.price');
+            const price = $price.attr('data-price') * 1;
+            $price.text('$ ' + dallorCommas(price));
+
+            const qty = $(this).find('.quantity').val() * 1;
+
+            $(this).find('.sub-total').text('$ ' + dallorCommas(price * qty));
+            total += price * qty;
+        });
+        $('.totalPrice').text('$ ' + dallorCommas(total));
+    };
+
+    const changeQty = function(event) {
+        const el = $(event.currentTarget);
+        const qty = el.val();
+        const pid = el.closest('tr').attr('data-sid');
+        $.get('cart-api.php', {
+            action: 'add',
+            pid,
+            qty
+        }, function(data) {
+            showCartCount(data);
+            calPrices();
+        }, 'json');
+    };
+
+    //document ready
+    $(function() {
+        //呈現數量
+        quantity.each(function() {
+            const qty = $(this).attr('data-qty') * 1;
+            $(this).val(qty);
+        });
+
+        calPrices();
+    });
 </script>
 <?php include __DIR__ . '/part-text/HTML/html-foot.php'; ?>

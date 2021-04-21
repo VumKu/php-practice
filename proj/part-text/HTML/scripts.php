@@ -11,7 +11,7 @@
 
     }
 
-    $get('cart-api.php', function(data) {
+    $.get('cart-api.php', function(data) {
 
         showCartCount(data);
     }, 'json');
