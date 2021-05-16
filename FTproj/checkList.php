@@ -3,16 +3,7 @@
 <?php
 
 $title = '灣廟 | 結帳確認';
-$pageName = 'check_list & payment method';
-
-// if (!isset($_SESSION['cart'])) {
-//     $_SESSION['cart'] = [];
-// }
-
-// session_start();
-
-
-
+$pageName = 'check_list & payment method';4
 
 
 ?>
@@ -250,7 +241,8 @@ $pageName = 'check_list & payment method';
             </div>
         </div>
     </div>
-
+    
+    
     <div class="checkList_finBtn">
         <button class="checkList_btn" data-target="#finishOrder" id="orderbtn" onclick="requireData()">確認下訂</button>
     </div>
@@ -285,6 +277,9 @@ $pageName = 'check_list & payment method';
     </div>
 </div>
 
+
+
+
 <div class="checkList_bccImg">
     <img src="./img/checkList_bccImg.png" alt="">
 </div>
@@ -293,8 +288,4 @@ $pageName = 'check_list & payment method';
 <?php include __DIR__ . '/connect_parts/go-top.php' ?>
 
 <?php include __DIR__ . '/connect_parts/checkList/checkList_scripts.php' ?>
-<script>
-    let cart = <?= $_SESSION['cart']['product']; ?>;
-    console.log('購物車內容:', cart);
-</script>
 <?php include __DIR__ . '/connect_parts/html-foot.php' ?>
