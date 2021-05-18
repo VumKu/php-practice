@@ -110,7 +110,7 @@
 
 
 
-
+    // 卡號自動換行
     $("input.cardNum").on("keydown", function(e) {
         if ((e.which >= 48 && e.which <= 57) || e.which == 8) {
 
@@ -135,11 +135,23 @@
         }
     });
 
-    //check判斷
+    //選擇貨到付款時，會自動清空已填的信用卡資料
+    $("#arrivePayRadio").click(function(){
+        $(".checkList_pay_cho input").val("");
+    })
 
+
+
+    //check判斷:如果有勾選，則內容為必填
     function requireData() {
 
         let creditRadio = document.getElementById('creditRadio');
+        let arrivePayRadio = document.getElementById('arrivePayRadio');
+
+        if(arrivePayRadio.checked == true){
+            console.log('arrivePay', 'checked');
+            $('#orderbtn').attr('data-toggle', 'modal')
+        };
 
         if (creditRadio.checked == true) {
 
@@ -150,49 +162,62 @@
             var b = $("input[name='cardnum-p2']").val()
             var c = $("input[name='cardnum-p3']").val()
             var d = $("input[name='cardnum-p4']").val()
+            // 判斷持卡人是否填寫
+            var creditName = $("input[name='cardName']").val()
+            // 判斷安全碼是否填寫 & 正確
+            var cardSafeNum = $("input[name='cardSafeNum']").val()
+            // 判斷日期是否填寫 & 正確
+            var cardDateA = $("input[name='cardDateA']").val()
+            var cardDateB = $("input[name='cardDateB']").val()
+
 
             if (a == "" || a.length < 4) {
                 alert("卡號格式錯誤");
-                return false;
+                return false; //阻止表單送出
             }
-            if (b == "" || b.length < 4) {
+            else if (b == "" || b.length < 4) {
                 alert("卡號格式錯誤");
                 return false;
             }
-            if (c == "" || c.length < 4) {
+            else if (c == "" || c.length < 4) {
                 alert("卡號格式錯誤");
                 return false;
             }
-            if (d == "" || d.length < 4) {
+            else if (d == "" || d.length < 4) {
                 alert("卡號格式錯誤");
                 return false;
-            } else {
-                $('#orderbtn').attr('data-toggle', 'modal')
-            }
+            } 
 
-            // 判斷持卡人是否填寫
-            var creditName = $("input[name='cardName']").val()
+            
 
-            if (creditName == "") {
+            else if (creditName == "") {
                 alert("請輸入持卡人姓名");
                 return false;
             }
 
-            // 判斷安全碼是否填寫 & 正確
-            var cardSafeNum = $("input[name='cardSafeNum']").val()
-
-            if (cardSafeNum == "" || cardSafeNum.length < 3) {
+            else if (cardSafeNum == "" || cardSafeNum.length < 3) {
                 alert("請輸入正確的安全碼");
                 return false;
             }
 
-        } else {
-            console.log('cradio', 'no checked');
-            // $('#orderbtn').attr('data-toggle', 'modal')
+            else if (cardDateA == "" || cardDateA.length < 2) {
+                alert("請輸入正確的到期日");
+                return false;
+            }
+            else if (cardDateB == "" || cardDateB.length < 2) {
+                alert("請輸入正確的到期日");
+                return false;
+            }
 
-        };
 
+            else {
+                $('#orderbtn').attr('data-toggle', 'modal')
+            }
+
+        }; 
 
 
     }
+
+    
 </script>

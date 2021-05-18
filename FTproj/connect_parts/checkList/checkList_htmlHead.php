@@ -23,6 +23,26 @@
     <link rel="stylesheet" href="./css/navbar2.css">
 
     <style>
+
+        .nav_navbar_com {
+            background-image: url(./img/nav_barBcc.jpg);
+        }
+        .nav_burgurBar{
+            background-image: url(./img/nav_bcc.png);
+        }
+        .nav_dropDownMenu{
+            background-image: url(./img/nav_bcc2.png);
+        }
+        .modal-content-re {
+            background-image: url(./img/nav_bcc2.png);
+        }
+        .form-control-re {
+            background-image: url(./img/nav_bcc.png);
+        }
+
+
+
+
         body {
             font-family: 'Faustina', serif;
             background-image: url(./img/nav_bcc.png);
@@ -144,7 +164,7 @@
         }
 
         .checkList_choInfo {
-            background-image: url(/img/nav_bcc2.png);
+            background-image: url(./img/nav_bcc2.png);
             margin: 0px 0 0 15px;
             padding: 10px;
             border-radius: 5px;

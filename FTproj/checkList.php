@@ -3,7 +3,11 @@
 <?php
 
 $title = '灣廟 | 結帳確認';
-$pageName = 'check_list & payment method';4
+$pageName = 'check_list & payment method';
+
+//訂單編號：前8位為日期，剩下取time()結果的後五位
+$order_id = date("YmdHis").substr(microtime(),2,4);
+
 
 
 ?>
@@ -30,49 +34,52 @@ $pageName = 'check_list & payment method';4
     <div class="checkList_itemContainer">
 
         <!-- product -->
-        <?php foreach ($_SESSION['cart']['product'] as $i) : ?>
-            <div class="checkList_item">
-                <div class="checkList_itemImgBox">
+        <!-- PHP變數待調整 -->
+        <?php foreach ($_SESSION['cart']['products'] as $i) : ?>
+            <div class="checkList_item checkList_product">
+                <div class="checkList_itemImgBox ">
                     <img src="./img/indexproduct(2).jpg" alt="">
                 </div>
                 <div class="checkList_itemWordBox">
                     <p class="checkList_itemName"><?= $i['name'] ?></p>
                     <p class="checkList_itemAttr"><?= $i['attr'] ?></p>
-                    <p class="checkList_itemPrice">NT. <?= $i['price'] ?></p>
-                    <p class="checkList_itemNum"><?= $i['qty'] ?></p>
-                    <p class="checkList_itemTotalP">NT. <?= $i['price'] * $i['qty'] ?></p>
+                    <p class="checkList_itemPrice" data-price="<?= $i['price'] ?>"></p>
+                    <p class="checkList_itemNum" data-qty="<?= $i['qty'] ?>"></p>
+                    <p class="checkList_itemTotalP"></p>
                 </div>
             </div>
         <?php endforeach; ?>
 
         <!-- Trip -->
+        <!-- PHP變數待調整 -->
         <?php foreach ($_SESSION['cart']['plan'] as $j) : ?>
-            <div class="checkList_item">
+            <div class="checkList_item checkList_trip">
                 <div class="checkList_itemImgBox">
                     <img src="./img/indexproduct(2).jpg" alt="">
                 </div>
                 <div class="checkList_itemWordBox">
                     <p class="checkList_itemName"><?= $j['name'] ?></p>
                     <p class="checkList_itemAttr"><?= $j['attr'] ?></p>
-                    <p class="checkList_itemPrice">NT. <?= $j['price'] ?></p>
-                    <p class="checkList_itemNum"><?= $j['qty'] ?></p>
-                    <p class="checkList_itemTotalP">NT. <?= $j['price'] * $j['qty'] ?></p>
+                    <p class="checkList_itemPrice" data-price="<?= $j['price'] ?>"></p>
+                    <p class="checkList_itemNum" data-qty="<?= $j['qty'] ?>"></p>
+                    <p class="checkList_itemTotalP"></p>
                 </div>
             </div>
         <?php endforeach; ?>
 
         <!-- light -->
+        <!-- PHP變數待調整 -->
         <?php foreach ($_SESSION['cart']['light'] as $k) : ?>
-            <div class="checkList_item">
+            <div class="checkList_item checkList_light">
                 <div class="checkList_itemImgBox">
                     <img src="./img/indexproduct(2).jpg" alt="">
                 </div>
                 <div class="checkList_itemWordBox">
                     <p class="checkList_itemName"><?= $k['name'] ?></p>
                     <p class="checkList_itemAttr"><?= $k['attr'] ?></p>
-                    <p class="checkList_itemPrice">NT. <?= $k['price'] ?></p>
-                    <p class="checkList_itemNum"><?= $k['qty'] ?></p>
-                    <p class="checkList_itemTotalP">NT. <?= $k['price'] * $k['qty'] ?></p>
+                    <p class="checkList_itemPrice" data-price="<?= $k['price'] ?>"></p>
+                    <p class="checkList_itemNum" data-qty="<?= $k['qty'] ?>"></p>
+                    <p class="checkList_itemTotalP"></p>
                 </div>
             </div>
         <?php endforeach; ?>
@@ -89,7 +96,7 @@ $pageName = 'check_list & payment method';4
                     <label class="checkList_shopChoName">
                         <input type="radio" name="deliver" value="7-11" checked> 711
                     </label>
-                    <p>+ NT. 60</p>
+                    <p data-price="60">+ NT. 60</p>
                 </div>
 
                 <div class="checkList_dliver_choInfo checkList_choInfo">
@@ -114,7 +121,7 @@ $pageName = 'check_list & payment method';4
                     <label class="checkList_shopChoName">
                         <input type="radio" name="deliver" value="familyMart"> 全家
                     </label>
-                    <p>+ NT. 60</p>
+                    <p data-price="60">+ NT. 60</p>
                 </div>
 
                 <div class="checkList_dliver_choInfo checkList_choInfo">
@@ -139,7 +146,7 @@ $pageName = 'check_list & payment method';4
                     <label class="checkList_shopChoName">
                         <input type="radio" name="deliver" value="hiLife"> 萊爾富
                     </label>
-                    <p>+ NT. 60</p>
+                    <p data-price="60">+ NT. 60</p>
                 </div>
 
                 <div class="checkList_dliver_choInfo checkList_choInfo">
@@ -164,7 +171,7 @@ $pageName = 'check_list & payment method';4
                     <label class="checkList_shopChoName">
                         <input type="radio" name="deliver" value=""> 宅配
                     </label>
-                    <p>+ NT. 100</p>
+                    <p data-price="100">+ NT. 100</p>
                 </div>
 
                 <div class="checkList_dliver_choInfo checkList_choInfo">
@@ -186,7 +193,7 @@ $pageName = 'check_list & payment method';4
 
         <div class="checkList_payContent">
             <div class="checkList_pay_cho">
-                <label class="checkList_payMethod"><input type="radio" name="pay" value="bysent" checked>
+                <label class="checkList_payMethod"><input type="radio" name="pay" value="bysent" id="arrivePayRadio" checked>
                     貨到付款</label>
             </div>
 
@@ -212,8 +219,8 @@ $pageName = 'check_list & payment method';4
                         </label>
                         <br />
                         <label>*到期日:
-                            <input class="cardDate" type="text" name="cardDate" maxlength="2" size="2" oninput="value=value.replace(/[^\d]/g,'')"> /
-                            <input class="cardDate" type="text" name="cardDate" maxlength="2" size="2" oninput="value=value.replace(/[^\d]/g,'')">
+                            <input class="cardDate" type="text" name="cardDateA" maxlength="2" size="2" oninput="value=value.replace(/[^\d]/g,'')" placeholder="MM"> /
+                            <input class="cardDate" type="text" name="cardDateB" maxlength="2" size="2" oninput="value=value.replace(/[^\d]/g,'')" placeholder="YY">
                         </label>
                     </form>
                 </div>
@@ -227,17 +234,17 @@ $pageName = 'check_list & payment method';4
         <div class="checkList_totalPricInfo">
             <div class="checkList_totalPricInfoBox">
                 <p>商品金額</p>
-                <p>NT. 1125</p>
+                <p class="totalPriceBox"></p>
             </div>
 
             <div class="checkList_totalPricInfoBox">
                 <p>運費金額</p>
-                <p>NT. 60</p>
+                <p class="checkList_shipFee">未選擇配送方式</p>
             </div>
 
             <div class="checkList_totalPricInfoBox">
                 <p>訂單總金額</p>
-                <p>NT. 1185</p>
+                <p class="checkList_orderPrice">計算中</p>
             </div>
         </div>
     </div>
@@ -266,7 +273,7 @@ $pageName = 'check_list & payment method';4
                 </div>
                 <div class="modal-orderNum">
                     <span>訂單編號:</span>
-                    <span>TC0033333333333301</span>
+                    <span><?= $order_id ?></span>
                 </div>
             </div>
             <div class="modal-footer modal-footer-re">
@@ -288,4 +295,72 @@ $pageName = 'check_list & payment method';4
 <?php include __DIR__ . '/connect_parts/go-top.php' ?>
 
 <?php include __DIR__ . '/connect_parts/checkList/checkList_scripts.php' ?>
+
+<script>
+    const dallorCommas = function(n){
+            return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    };
+
+   $(document).ready(function(){
+       
+        let proj_total = 0;
+        let trip_total = 0;
+        let light_total = 0;
+        $('.checkList_product').each(function(){
+            const $price = $(this).find('.checkList_itemPrice');
+            const price = $price.attr('data-price') * 1;
+            $price.text('NTD. ' + dallorCommas(price));
+
+            const qty = $(this).find('.checkList_itemNum').attr('data-qty') * 1;
+            $(this).find('.checkList_itemNum').text(qty);
+
+            $(this).find('.checkList_itemTotalP').text('NTD. ' + dallorCommas(price * qty));
+            proj_total += price * qty;
+        });
+
+        $('.checkList_trip').each(function(){
+            const $price = $(this).find('.checkList_itemPrice');
+            const price = $price.attr('data-price') * 1;
+            $price.text('NTD. ' + dallorCommas(price));
+
+            const qty = $(this).find('.checkList_itemNum').attr('data-qty') * 1;
+            $(this).find('.checkList_itemNum').text(qty);
+
+            $(this).find('.checkList_itemTotalP').text('NTD. ' + dallorCommas(price * qty));
+            trip_total += price * qty;
+        });
+
+        $('.checkList_light').each(function(){
+            const $price = $(this).find('.checkList_itemPrice');
+            const price = $price.attr('data-price') * 1;
+            $price.text('NTD. ' + dallorCommas(price));
+
+            const qty = $(this).find('.checkList_itemNum').attr('data-qty') * 1;
+            $(this).find('.checkList_itemNum').text(qty);
+
+            $(this).find('.checkList_itemTotalP').text('NTD. ' + dallorCommas(price * qty));
+            light_total += price * qty;
+        });
+
+        //最後的商品總金額
+        $('.totalPriceBox').text('NTD. ' + dallorCommas(proj_total + trip_total + light_total));
+
+        //運費選擇
+        $('.checkList_deliver_choName input').click(function(){
+            const shipFee = $(this).parent().siblings().attr('data-price') * 1;
+
+            $('.checkList_shipFee').text('NTD. ' + shipFee);
+
+            //訂單總金額
+            const orderPrice = proj_total + trip_total + light_total + shipFee;
+            $('.checkList_orderPrice').text('NTD. ' + orderPrice);
+
+        })
+        
+   });
+
+        
+
+
+</script>
 <?php include __DIR__ . '/connect_parts/html-foot.php' ?>

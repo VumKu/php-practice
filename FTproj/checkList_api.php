@@ -42,7 +42,7 @@ $order_totalPrice = $product_totalPrice + $shipment_fee;
                     )";
 
     $o_stmt = $pdo->prepare($o_sql);
-    $stmt->execute([
+    $o_stmt->execute([
         $_SESSION['user']['id'], //member_sid
         $_POST['shipment_method'],
         $_POST['shipment_address'],
@@ -54,8 +54,31 @@ $order_totalPrice = $product_totalPrice + $shipment_fee;
         $order_totalPrice
     ]);
 
+
+    $order_id = $pdo->lastInsertId();
+
+    $d_sql = "INSERT INTO `output_order_product`(
+                        `order_id`,`product_id`, 
+                        `product_name`, `product_num`, `product_price`
+                        ) VALUES (
+                            NULL, ?,
+                            ?, ?, ?
+                        )";
+
+    $d_stmt = $pdo->prepare($d_sql);
+
+    foreach($_SESSION['cart'] as $c) {
+        $d_stmt->execute([
+            $order_id,
+            $c['product_category'], //資料表內無類別這項
+            $c['product_id'], //...?
+            $c['product_name'],
+            $c['product_num'],
+            $c['product_price']
+        ]);
+
+    };
     
     unset($_SESSION['cart']); //送出後清空購物車
-
 
 ?>
