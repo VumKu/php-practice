@@ -42,72 +42,26 @@
         })
     });
 
-    //選擇商店
+    //選擇商店，滑動動畫
     $('.checkList_shopChoName').click(function() {
         $(this).parent().siblings().slideDown('slow');
         $(this).parent().parent().siblings().find('.checkList_dliver_choInfo').slideUp('slow');
-
-
     });
 
-    //選擇付款
+    //選擇付款，滑動動畫
     $('.checkList_payMethod').click(function() {
         $(this).siblings().slideDown('slow');
         $(this).parent().siblings().find('.checkList_pay_choInfo').slideUp('slow');
     });
 
-    //radio相連
+    //選擇該radio，則會連動內部的radio也checked
     $('.checkList_shopChoName').click(function() {
 
-        if ($('input[name="deliver"]').checked = true) {
+        if ( $(this).find('.shopRadio').checked = true) {
 
-
-            $(this).parent().siblings().find('.shopAddress_radio').attr('checked', true);
+            $(this).parent().siblings().find('.shopAddress_radio').prop('checked', true);
         }
-    })
-
-    // 選信用卡付款，必填資訊
-    // $('input[value="credit"]').change(function () {
-    //     if ($(this).is('checked')) {
-    //         $('.cardNum').attr('required')
-    //     } else {
-    //         $('.cardNum').removeAttr('required')
-    //     }
-    // })
-
-    // let Cradio = document.getElementById('red')
-    // if (Cradio.checked == true){
-    //     console.log('cradio', 'checked')
-    //     // $('.cardNum').attr('required')
-    // } else {
-    //     console.log('cradio', 'no checked')
-    //     // $('.cardNum').removeAttr('required')
-    // };
-
-
-
-    //選宅配時，必填資訊
-
-
-    //信用卡數字限制
-    // re = /^\d{4}-\d{4}-\d{4}-\d{4}$/;
-    // if (!re.test(formValue.value))
-    //     alert(`請輸入數字`);
-
-    //計算
-    $(document).ready(function() {
-        var itemNum = +$(this).find('.checkList_itemNum').html();
-        console.log('num', itemNum)
-
-        var itemPrice = +$(this).find('.checkList_itemPrice').data('price')
-        console.log('p', itemPrice)
-
-        $('#checkList_itemTotalP_num').text(itemNum * itemPrice)
-        console.log('totoP', itemNum * itemPrice)
-    })
-
-
-
+    });
 
 
     // 卡號自動換行
@@ -139,6 +93,10 @@
     $("#arrivePayRadio").click(function(){
         $(".checkList_pay_cho input").val("");
     })
+    //選擇超商取貨時，會自動清空已填的宅配資料
+    $(".shopRadio").click(function(){
+        $(".deliveryInfo input").val("");
+    })
 
 
 
@@ -147,15 +105,64 @@
 
         let creditRadio = document.getElementById('creditRadio');
         let arrivePayRadio = document.getElementById('arrivePayRadio');
+        let deliveryRadio = document.getElementById('deliveryRadio');
 
         if(arrivePayRadio.checked == true){
-            console.log('arrivePay', 'checked');
-            $('#orderbtn').attr('data-toggle', 'modal')
+
+            console.log('arrivePay', 'checked');  
+
+                //判斷宅配選項是否有選
+                if (deliveryRadio.checked == true) {
+                    var address = $("#deli_address").val();
+                    var reciver = $("input[name='shipment_reciver']").val();
+                    var phone = $("input[name='shipment_reciver_phone']").val();
+
+                    if (address == ""){
+                        alert("請輸入收件地址");
+                        return false;
+                    }
+                    else if (reciver == ""){
+                        alert("請輸入收件人姓名");
+                        return false;
+                    }
+                    else if (phone == ""){
+                        alert("請輸入收件人電話");
+                        return false;
+                    }
+                    else{
+                    $('#orderbtn').attr('data-toggle', 'modal')
+                    }
+
+                }
+                else{
+                    $('#orderbtn').attr('data-toggle', 'modal')
+                }      
         };
 
         if (creditRadio.checked == true) {
 
             console.log('cradio', 'checked');
+
+            //判斷宅配選項是否有選
+            if (deliveryRadio.checked == true) {
+                    var address = $("#deli_address").val();
+                    var reciver = $("input[name='shipment_reciver']").val();
+                    var phone = $("input[name='shipment_reciver_phone']").val();
+
+                    if (address == ""){
+                        alert("請輸入收件地址");
+                        return false;
+                    }
+                    else if (reciver == ""){
+                        alert("請輸入收件人姓名");
+                        return false;
+                    }
+                    else if (phone == ""){
+                        alert("請輸入收件人電話");
+                        return false;
+                    }
+
+                }
 
             // 判斷卡號是否格式正確
             var a = $("input[name='cardnum-p1']").val()
@@ -167,8 +174,8 @@
             // 判斷安全碼是否填寫 & 正確
             var cardSafeNum = $("input[name='cardSafeNum']").val()
             // 判斷日期是否填寫 & 正確
-            var cardDateA = $("input[name='cardDateA']").val()
-            var cardDateB = $("input[name='cardDateB']").val()
+            var cardDateMM = $("input[name='cardDateMM']").val()
+            var cardDateYY = $("input[name='cardDateYY']").val()
 
 
             if (a == "" || a.length < 4) {
@@ -200,11 +207,11 @@
                 return false;
             }
 
-            else if (cardDateA == "" || cardDateA.length < 2) {
+            else if (cardDateMM == "" || cardDateMM.length < 2) {
                 alert("請輸入正確的到期日");
                 return false;
             }
-            else if (cardDateB == "" || cardDateB.length < 2) {
+            else if (cardDateYY == "" || cardDateYY.length < 2) {
                 alert("請輸入正確的到期日");
                 return false;
             }
@@ -213,11 +220,60 @@
             else {
                 $('#orderbtn').attr('data-toggle', 'modal')
             }
+            
 
         }; 
 
-
     }
+
+
+    //ajex 傳送訂單編號
+    $(document).ready(function(){
+
+        $('#orderbtn').on('click', function(e) {
+
+            var order_id = $('#orderId').html();
+
+            $.ajax({
+                url: "test-api.php",
+                method: "POST",
+                data: {
+                    "order_id": order_id
+                },
+                error:function(){
+                    alert("失敗");
+                },
+                success:function(){
+                    alert("成功");
+                } 
+            });
+
+        })
+    })
+
+
+
+
+
+
+
+    // Go-Top
+    $(window).scroll(function (event) {
+            let scrollTop = $(window).scrollTop();
+            console.log(scrollTop);
+
+            if (scrollTop >= 500) {
+
+                $(".index_goTopImg").addClass('show');
+            } else {
+                $(".index_goTopImg").removeClass('show');
+            }
+        });
+
+        $('.index_goTopImg').click(function () {
+            $("html,body").animate({
+                scrollTop: 0}, 700);
+            });
 
     
 </script>

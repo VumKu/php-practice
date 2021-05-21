@@ -281,6 +281,24 @@
             /* position: absolute; */
         }
 
+        /* goTop */
+        .index_goTopImg {
+            width: 50px;
+            position: fixed;
+            bottom: -100px;
+            right: 20px;
+            transition: .5s;
+            z-index: 9;
+        }
+
+        .index_goTopImg svg {
+            width: 100%;
+        }
+
+        .index_goTopImg.show {
+            bottom: 20px;
+        }
+
 
         /* footer */
         footer {

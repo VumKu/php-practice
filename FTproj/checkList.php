@@ -9,7 +9,6 @@ $pageName = 'check_list & payment method';
 $order_id = date("YmdHis").substr(microtime(),2,4);
 
 
-
 ?>
 
 
@@ -86,174 +85,182 @@ $order_id = date("YmdHis").substr(microtime(),2,4);
 
     </div>
 
-    <div class="checkList_deliverBox">
-        <div class="checkList_subTitle">寄送方式</div>
-        <div class="checkList_info">選擇寄送方式</div>
 
-        <div class="checkList_deliverContent">
-            <div class="checkList_deliver_cho">
-                <div class="checkList_deliver_choName">
-                    <label class="checkList_shopChoName">
-                        <input type="radio" name="deliver" value="7-11" checked> 711
-                    </label>
-                    <p data-price="60">+ NT. 60</p>
-                </div>
+    <form name="form1" method="post" novalidate onsubmit="checkForm(); return false;">
+        <div class="checkList_deliverBox">
+            <div class="checkList_subTitle">寄送方式</div>
+            <div class="checkList_info">選擇寄送方式</div>
 
-                <div class="checkList_dliver_choInfo checkList_choInfo">
-                    <div class="checkList_dliver_choInfoDetail">
-                        <label class="shopName">
-                            <input type="radio" name="shopAddress" value="某某門市" class="shopAddress_radio"> 某某門市
+            <div class="checkList_deliverContent">
+                <div class="checkList_deliver_cho">
+                    <div class="checkList_deliver_choName">
+
+                        <label class="checkList_shopChoName">
+                            <input type="radio" name="shipment_method" value="7-11" class="shopRadio"> 711
                         </label>
-                        <div class="checkList_dliver_shopAddress">
-                            <p>106台北市大安區復興南路二段203號</p>
-                            <div class="checkList_dliver_shopReceiver">
-                                <span>簡峰峰</span>
-                                <span>(+886)987654321</span>
+
+                        <p data-price="60">+ NT. 60</p>
+                    </div>
+
+                    <div class="checkList_dliver_choInfo checkList_choInfo">
+                        <div class="checkList_dliver_choInfoDetail">
+                            <label class="shopName">
+                                <input type="radio" name="shipment_shipName" value="大安門市" class="shopAddress_radio"> 大安門市
+                            </label>
+                            <div class="checkList_dliver_shopAddress">
+                                <p>106台北市大安區復興南路二段203號</p>
+                                <div class="checkList_dliver_shopReceiver">
+                                    <span>簡峰峰</span>
+                                    <span>(+886)987654321</span>
+                                </div>
                             </div>
                         </div>
+                        <button class="checkList_btn"><a href="">選擇門市</a></button>
                     </div>
-                    <button class="checkList_btn"><a href="">選擇門市</a></button>
-                </div>
-            </div>
-
-            <div class="checkList_deliver_cho">
-                <div class="checkList_deliver_choName">
-                    <label class="checkList_shopChoName">
-                        <input type="radio" name="deliver" value="familyMart"> 全家
-                    </label>
-                    <p data-price="60">+ NT. 60</p>
                 </div>
 
-                <div class="checkList_dliver_choInfo checkList_choInfo">
-                    <div class="checkList_dliver_choInfoDetail">
-                        <label class="shopName">
-                            <input type="radio" name="shopAddress" value="某某門市" class="shopAddress_radio"> 某某門市
+                <div class="checkList_deliver_cho">
+                    <div class="checkList_deliver_choName">
+                        <label class="checkList_shopChoName">
+                            <input type="radio" name="shipment_method" value="familyMart" class="shopRadio"> 全家
                         </label>
-                        <div class="checkList_dliver_shopAddress">
-                            <p>106台北市大安區復興南路二段203號</p>
-                            <div class="checkList_dliver_shopReceiver">
-                                <span>簡峰峰</span>
-                                <span>(+886)987654321</span>
+                        <p data-price="60">+ NT. 60</p>
+                    </div>
+
+                    <div class="checkList_dliver_choInfo checkList_choInfo">
+                        <div class="checkList_dliver_choInfoDetail">
+                            <label class="shopName">
+                                <input type="radio" name="shipment_shipName" value="西華門市" class="shopAddress_radio"> 西華門市
+                            </label>
+                            <div class="checkList_dliver_shopAddress">
+                                <p>106台北市大安區復興南路二段203號</p>
+                                <div class="checkList_dliver_shopReceiver">
+                                    <span>簡峰峰</span>
+                                    <span>(+886)987654321</span>
+                                </div>
                             </div>
                         </div>
+                        <button class="checkList_btn"><a href="">選擇門市</a></button>
                     </div>
-                    <button class="checkList_btn"><a href="">選擇門市</a></button>
-                </div>
-            </div>
-
-            <div class="checkList_deliver_cho">
-                <div class="checkList_deliver_choName">
-                    <label class="checkList_shopChoName">
-                        <input type="radio" name="deliver" value="hiLife"> 萊爾富
-                    </label>
-                    <p data-price="60">+ NT. 60</p>
                 </div>
 
-                <div class="checkList_dliver_choInfo checkList_choInfo">
-                    <div class="checkList_dliver_choInfoDetail">
-                        <label class="shopName">
-                            <input type="radio" name="shopAddress" value="某某門市" class="shopAddress_radio"> 某某門市
+                <div class="checkList_deliver_cho">
+                    <div class="checkList_deliver_choName">
+                        <label class="checkList_shopChoName">
+                            <input type="radio" name="shipment_method" value="hiLife" class="shopRadio"> 萊爾富
                         </label>
-                        <div class="checkList_dliver_shopAddress">
-                            <p>106台北市大安區復興南路二段203號</p>
-                            <div class="checkList_dliver_shopReceiver">
-                                <span>簡峰峰</span>
-                                <span>(+886)987654321</span>
+                        <p data-price="60">+ NT. 60</p>
+                    </div>
+
+                    <div class="checkList_dliver_choInfo checkList_choInfo">
+                        <div class="checkList_dliver_choInfoDetail">
+                            <label class="shopName">
+                                <input type="radio" name="shipment_shipName" value="德欣門市" class="shopAddress_radio"> 德欣門市
+                            </label>
+                            <div class="checkList_dliver_shopAddress">
+                                <p>106台北市大安區復興南路二段203號</p>
+                                <div class="checkList_dliver_shopReceiver">
+                                    <span>簡峰峰</span>
+                                    <span>(+886)987654321</span>
+                                </div>
                             </div>
                         </div>
+                        <button class="checkList_btn"><a href="">選擇門市</a></button>
                     </div>
-                    <button class="checkList_btn"><a href="">選擇門市</a></button>
-                </div>
-            </div>
-
-            <div class="checkList_deliver_cho">
-                <div class="checkList_deliver_choName">
-                    <label class="checkList_shopChoName">
-                        <input type="radio" name="deliver" value=""> 宅配
-                    </label>
-                    <p data-price="100">+ NT. 100</p>
                 </div>
 
-                <div class="checkList_dliver_choInfo checkList_choInfo">
-                    <form>
-                        <input type="text" name="name" placeholder="地址" size="30">
-                        <br>
-                        <input type="text" name="phone" placeholder="收件人">
-                        <input type="text" name="address" placeholder="聯絡電話">
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="checkList_payBox">
-        <div class="checkList_subTitle">付款方式</div>
-        <div class="checkList_info">選擇付款方式</div>
-
-        <div class="checkList_payContent">
-            <div class="checkList_pay_cho">
-                <label class="checkList_payMethod"><input type="radio" name="pay" value="bysent" id="arrivePayRadio" checked>
-                    貨到付款</label>
-            </div>
-
-            <div class="checkList_pay_cho">
-                <label class="checkList_payMethod"><input type="radio" name="pay" value="bycredit" id="creditRadio"> 信用卡 / 金融卡</label>
-
-                <div class="checkList_pay_choInfo checkList_choInfo">
-                    <p class="checkList_importment">*為必填</p>
-                    <form class="creditForm">
-                        <label>*請輸入卡號:
-                            <input class="cardNum" type="text" name="cardnum-p1" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">-
-                            <input class="cardNum" type="text" name="cardnum-p2" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">-
-                            <input class="cardNum" type="text" name="cardnum-p3" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">-
-                            <input class="cardNum" type="text" name="cardnum-p4" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">
+                <div class="checkList_deliver_cho">
+                    <div class="checkList_deliver_choName">
+                        <label class="checkList_shopChoName">
+                            <input type="radio" name="shipment_method" value="delivery" id="deliveryRadio"> 宅配
                         </label>
-                        <br />
-                        <label>*持卡人姓名:
-                            <input class="cardName" type="text" name="cardName">
+                        <p data-price="100">+ NT. 100</p>
+                    </div>
+
+                    <div class="checkList_dliver_choInfo checkList_choInfo deliveryInfo">
+                        <label class="shopName">
+                            <input type="radio" name="shipment_shipName" value="宅配" class="shopAddress_radio"> 收件地址
+                                                
+                            <p class="checkList_importment">*以下皆為必填資訊</p>
+                        
+                            <input type="text" name="shipment_address" placeholder="地址" size="30" id="deli_address">
+                            <br>
+                            <input type="text" name="shipment_reciver" placeholder="收件人">
+                            <input type="text" name="shipment_reciver_phone" placeholder="聯絡電話">
                         </label>
-                        <br />
-                        <label>*安全碼:
-                            <input class="cardSafeNum" type="text" name="cardSafeNum" maxlength="3" size="3" oninput="value=value.replace(/[^\d]/g,'')">
-                        </label>
-                        <br />
-                        <label>*到期日:
-                            <input class="cardDate" type="text" name="cardDateA" maxlength="2" size="2" oninput="value=value.replace(/[^\d]/g,'')" placeholder="MM"> /
-                            <input class="cardDate" type="text" name="cardDateB" maxlength="2" size="2" oninput="value=value.replace(/[^\d]/g,'')" placeholder="YY">
-                        </label>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
 
-    </div>
 
-    <div class="checkList_totalPriceContainer">
-        <div class="checkList_subTitle">訂單金額</div>
-        <div class="checkList_totalPricInfo">
-            <div class="checkList_totalPricInfoBox">
-                <p>商品金額</p>
-                <p class="totalPriceBox"></p>
+        <div class="checkList_payBox">
+            <div class="checkList_subTitle">付款方式</div>
+            <div class="checkList_info">選擇付款方式</div>
+
+            <div class="checkList_payContent">
+                <div class="checkList_pay_cho">
+                    <label class="checkList_payMethod"><input type="radio" name="payment_method" value="貨到付款" id="arrivePayRadio" checked>
+                        貨到付款</label>
+                </div>
+
+                <div class="checkList_pay_cho">
+                    <label class="checkList_payMethod"><input type="radio" name="payment_method" value="信用卡付款" id="creditRadio"> 信用卡 / 金融卡</label>
+
+                    <div class="checkList_pay_choInfo checkList_choInfo">
+                        <p class="checkList_importment">*為必填</p>
+                        
+                            <label>*請輸入卡號:
+                                <input class="cardNum" type="text" name="cardnum-p1" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">-
+                                <input class="cardNum" type="text" name="cardnum-p2" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">-
+                                <input class="cardNum" type="text" name="cardnum-p3" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">-
+                                <input class="cardNum" type="text" name="cardnum-p4" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">
+                            </label>
+                            <br />
+                            <label>*持卡人姓名:
+                                <input class="cardName" type="text" name="cardName">
+                            </label>
+                            <br />
+                            <label>*安全碼:
+                                <input class="cardSafeNum" type="text" name="cardSafeNum" maxlength="4" size="4" oninput="value=value.replace(/[^\d]/g,'')" placeholder="CSC">
+                            </label>
+                            <br />
+                            <label>*到期日:
+                                <input class="cardDate" type="text" name="cardDateMM" maxlength="2" size="2" oninput="value=value.replace(/[^\d]/g,'')" placeholder="MM"> /
+                                <input class="cardDate" type="text" name="cardDateYY" maxlength="2" size="2" oninput="value=value.replace(/[^\d]/g,'')" placeholder="YY">
+                            </label>
+                        
+                    </div>
+                </div>
             </div>
 
-            <div class="checkList_totalPricInfoBox">
-                <p>運費金額</p>
-                <p class="checkList_shipFee">未選擇配送方式</p>
-            </div>
+        </div>
 
-            <div class="checkList_totalPricInfoBox">
-                <p>訂單總金額</p>
-                <p class="checkList_orderPrice">計算中</p>
+        <div class="checkList_totalPriceContainer">
+            <div class="checkList_subTitle">訂單金額</div>
+            <div class="checkList_totalPricInfo">
+                <div class="checkList_totalPricInfoBox">
+                    <p>商品金額</p>
+                    <p class="totalPriceBox"></p>
+                </div>
+
+                <div class="checkList_totalPricInfoBox">
+                    <p>運費金額</p>
+                    <p class="checkList_shipFee">未選擇配送方式</p>
+                </div>
+
+                <div class="checkList_totalPricInfoBox">
+                    <p>訂單總金額</p>
+                    <p class="checkList_orderPrice">計算中</p>
+                </div>
             </div>
         </div>
-    </div>
-    
-    
-    <div class="checkList_finBtn">
-        <button class="checkList_btn" data-target="#finishOrder" id="orderbtn" onclick="requireData()">確認下訂</button>
-    </div>
-
+        
+        
+        <div class="checkList_finBtn">
+            <button type="submit" class="checkList_btn" data-target="#finishOrder" id="orderbtn" onclick="requireData()">確認下訂</button>
+        </div>
+    </form>
 </div>
 
 <!-- finishOrder -->
@@ -273,7 +280,7 @@ $order_id = date("YmdHis").substr(microtime(),2,4);
                 </div>
                 <div class="modal-orderNum">
                     <span>訂單編號:</span>
-                    <span><?= $order_id ?></span>
+                    <span id="orderId"><?= $order_id ?></span>
                 </div>
             </div>
             <div class="modal-footer modal-footer-re">
@@ -303,7 +310,7 @@ $order_id = date("YmdHis").substr(microtime(),2,4);
 
    $(document).ready(function(){
        
-        let proj_total = 0;
+        let prod_total = 0;
         let trip_total = 0;
         let light_total = 0;
         $('.checkList_product').each(function(){
@@ -315,7 +322,7 @@ $order_id = date("YmdHis").substr(microtime(),2,4);
             $(this).find('.checkList_itemNum').text(qty);
 
             $(this).find('.checkList_itemTotalP').text('NTD. ' + dallorCommas(price * qty));
-            proj_total += price * qty;
+            prod_total += price * qty;
         });
 
         $('.checkList_trip').each(function(){
@@ -343,7 +350,7 @@ $order_id = date("YmdHis").substr(microtime(),2,4);
         });
 
         //最後的商品總金額
-        $('.totalPriceBox').text('NTD. ' + dallorCommas(proj_total + trip_total + light_total));
+        $('.totalPriceBox').text('NTD. ' + dallorCommas(prod_total + trip_total + light_total));
 
         //運費選擇
         $('.checkList_deliver_choName input').click(function(){
@@ -352,12 +359,36 @@ $order_id = date("YmdHis").substr(microtime(),2,4);
             $('.checkList_shipFee').text('NTD. ' + shipFee);
 
             //訂單總金額
-            const orderPrice = proj_total + trip_total + light_total + shipFee;
+            const orderPrice = prod_total + trip_total + light_total + shipFee;
             $('.checkList_orderPrice').text('NTD. ' + orderPrice);
 
         })
         
    });
+
+
+
+   function checkForm() {
+
+        let isPass = true;
+
+        if(isPass){
+            $.post(
+                'test-api.php',
+                $(document.form1).serialize(),
+                function(data){
+                    if(data.success){
+                        alert('訂單已送出');
+                    } else {
+                        // console.log('資料沒有送出')
+                        alert(data.error);
+                    }
+                },
+                'json'
+            )
+        }
+
+    }
 
         
 

@@ -1,44 +1,43 @@
 <?php include __DIR__ . '/connect_parts/config.php'; 
 
 
-//計算product_totalPrice
-$pro_total = 0;
+//計算商品總金額
+$pdc_total = 0;
 foreach($_SESSION['cart']['product'] as $i) {
-    $pro_total += $i['price'] * $i['quantity'];
+    $pdc_total += $i['price'] * $i['quantity'];
 }
-$plan_total = 0;
+$trip_total = 0;
 foreach($_SESSION['cart']['plan'] as $j) {
-    $plan_total += $j['price'] * $j['quantity'];
+    $trip_total += $j['price'] * $j['quantity'];
 }
-$l_total = 0;
+$lit_total = 0;
 foreach($_SESSION['cart']['light'] as $k) {
-    $l_total += $k['price'] * $k['quantity'];
+    $lit_total += $k['price'] * $k['quantity'];
 }
 
-$product_totalPrice = $pro_total + $pla_total + $l_total;
+$product_totalPrice = $pdc_total + $trip_total + $lit_total;
 
 
 
 
 //計算運費(還沒寫好)
-$shipment_fee;
+// $shipment_fee;
 
-$order_totalPrice = $product_totalPrice + $shipment_fee;
-
-
+// $order_totalPrice = $product_totalPrice + $shipment_fee;
 
 
-    $o_sql = "INSERT INTO `output_order_info`(
-                    `order_id`, `member_sid`,`shipment_method`, 
-                    `shipment_address`, `shipment_reciver`, `shipment_reciver_phone`, 
-                    `payment_method`, `product_totalPrice`, `shipment_fee`,
-                    `order_totalPrice`,`order_time`
-                    ) VALUES(
+
+    //order_sum
+    $o_sql = "INSERT INTO `order_sum`(
+                        `order_id`, `member_sid`, `shipment_method`, 
+                        `shipment_address`, `shipment_reciver`, `shipment_reciver_phone`, 
+                        `payment_method`, `product_totalPrice`, `shipment_fee`, 
+                        `order_totalPrice`, `order_time`
+                    ) VALUES (
                         NULL, ?, ?,
                         ?, ?, ?,
                         ?, ?, ?,
                         ?, NOW()
-                    
                     )";
 
     $o_stmt = $pdo->prepare($o_sql);
@@ -55,29 +54,82 @@ $order_totalPrice = $product_totalPrice + $shipment_fee;
     ]);
 
 
-    $order_id = $pdo->lastInsertId();
+    //orders_pdc
+    $sum_id = $pdo->lastInsertId();
 
-    $d_sql = "INSERT INTO `output_order_product`(
-                        `order_id`,`product_id`, 
-                        `product_name`, `product_num`, `product_price`
-                        ) VALUES (
-                            NULL, ?,
+    $op_sql = "INSERT INTO `orders_pdc`(
+                        `sid`, `member_sid`, `pdc_sid`, 
+                        `pdc_qty`, `pdc_price`, `sum_id`
+                    ) VALUES (
+                            NULL, ?, ?,
                             ?, ?, ?
-                        )";
+                    )";
 
-    $d_stmt = $pdo->prepare($d_sql);
+    $op_stmt = $pdo->prepare($op_sql);
 
     foreach($_SESSION['cart'] as $c) {
-        $d_stmt->execute([
-            $order_id,
-            $c['product_category'], //資料表內無類別這項
-            $c['product_id'], //...?
-            $c['product_name'],
-            $c['product_num'],
-            $c['product_price']
+        $op_stmt->execute([
+            $_SESSION['user']['id'], 
+            $c['pdc_sid'], 
+            $c['pdc_qty'], 
+            $c['pdc_price'],
+            $sum_id
         ]);
-
     };
+
+    //orders_trip
+    $sum_id = $pdo->lastInsertId(); //?怎麼連
+
+    $ot_sql = "INSERT INTO `orders_trip`(
+                        `sid`, `member_sid`, `trip_sid`, 
+                        `trip_qty`, `trip_price`, `trip_plan`, 
+                        `trip_date`, `sum_id`
+                    ) VALUES (
+                            NULL, ?, ?,
+                            ?, ?, ?,
+                            ?, ?
+                    )";
+
+    $ot_stmt = $pdo->prepare($ot_sql);
+
+    foreach($_SESSION['cart'] as $c) {
+        $ot_stmt->execute([
+            $_SESSION['user']['id'], 
+            $c['trip_sid'], 
+            $c['trip_qty'], 
+            $c['trip_price'],
+            $c['trip_plan'],
+            $c['trip_date'],
+            $sum_id
+        ]);
+    };
+
+    //orders_lit
+    $sum_id = $pdo->lastInsertId(); //?怎麼連
+
+    $ol_sql = "INSERT INTO `orders_lit`(
+                        `sid`, `member_sid`, `lit_sid`, 
+                        `lit_qty`, `lit_price`, `sum_id`
+                    ) VALUES (
+                            NULL, ?, ?,
+                            ?, ?, ?
+                    )";
+
+    $ol_stmt = $pdo->prepare($ol_sql);
+
+    foreach($_SESSION['cart'] as $c) {
+        $ol_stmt->execute([
+            $_SESSION['user']['id'], 
+            $c['lit_sid'], 
+            $c['lit_qty'], 
+            $c['lit_price'],
+            $sum_id
+        ]);
+    };
+
+
+
+
     
     unset($_SESSION['cart']); //送出後清空購物車
 

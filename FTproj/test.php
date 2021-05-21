@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/connect_parts/config-copy.php'; ?>
+<?php include __DIR__ . '/connect_parts/config.php'; ?>
 
 <?php
 
@@ -7,6 +7,7 @@ $pageName = 'check_list & payment method';
 
 //訂單編號：前8位為日期，剩下取time()結果的後五位
 $order_id = date("YmdHis").substr(microtime(),2,4);
+
 
 ?>
 
@@ -84,103 +85,120 @@ $order_id = date("YmdHis").substr(microtime(),2,4);
 
     </div>
 
+
+<form name="form1" method="post" novalidate onsubmit="checkForm(); return false;">
     <div class="checkList_deliverBox">
         <div class="checkList_subTitle">寄送方式</div>
         <div class="checkList_info">選擇寄送方式</div>
 
         <div class="checkList_deliverContent">
-            <div class="checkList_deliver_cho">
-                <div class="checkList_deliver_choName">
-                    <label class="checkList_shopChoName">
-                        <input type="radio" name="deliver" value="7-11" checked> 711
-                    </label>
-                    <p data-price="60">+ NT. 60</p>
-                </div>
+            
+                <div class="checkList_deliver_cho">
+                    <div class="checkList_deliver_choName">
+                        <label class="checkList_shopChoName">
+                            
+                                <input type="radio" name="shipment_method" value="7-11" checked> 711
 
-                <div class="checkList_dliver_choInfo checkList_choInfo">
-                    <div class="checkList_dliver_choInfoDetail">
-                        <label class="shopName">
-                            <input type="radio" name="shopAddress" value="某某門市" class="shopAddress_radio"> 某某門市
                         </label>
-                        <div class="checkList_dliver_shopAddress">
-                            <p>106台北市大安區復興南路二段203號</p>
-                            <div class="checkList_dliver_shopReceiver">
-                                <span>簡峰峰</span>
-                                <span>(+886)987654321</span>
+                        <p data-price="60">+ NT. 60</p>
+                    </div>
+
+                    <div class="checkList_dliver_choInfo checkList_choInfo">
+                        <div class="checkList_dliver_choInfoDetail">
+                            <label class="shopName">
+
+                                <input type="radio" name="shipment_address" value="大安門市" class="shopAddress_radio"> 大安門市
+
+                            </label>
+                            <div class="checkList_dliver_shopAddress">
+                                <p>106台北市大安區復興南路二段203號</p>
+                                <div class="checkList_dliver_shopReceiver">
+                                    <span>簡峰峰</span>
+                                    <span>(+886)987654321</span>
+                                </div>
                             </div>
                         </div>
+                        <button class="checkList_btn"><a href="">選擇門市</a></button>
                     </div>
-                    <button class="checkList_btn"><a href="">選擇門市</a></button>
-                </div>
-            </div>
-
-            <div class="checkList_deliver_cho">
-                <div class="checkList_deliver_choName">
-                    <label class="checkList_shopChoName">
-                        <input type="radio" name="deliver" value="familyMart"> 全家
-                    </label>
-                    <p data-price="60">+ NT. 60</p>
                 </div>
 
-                <div class="checkList_dliver_choInfo checkList_choInfo">
-                    <div class="checkList_dliver_choInfoDetail">
-                        <label class="shopName">
-                            <input type="radio" name="shopAddress" value="某某門市" class="shopAddress_radio"> 某某門市
+                <div class="checkList_deliver_cho">
+                    <div class="checkList_deliver_choName">
+                        <label class="checkList_shopChoName">
+                            
+                        <input type="radio" name="shipment_method" value="familyMart"> 全家
+                            
                         </label>
-                        <div class="checkList_dliver_shopAddress">
-                            <p>106台北市大安區復興南路二段203號</p>
-                            <div class="checkList_dliver_shopReceiver">
-                                <span>簡峰峰</span>
-                                <span>(+886)987654321</span>
+                        <p data-price="60">+ NT. 60</p>
+                    </div>
+
+                    <div class="checkList_dliver_choInfo checkList_choInfo">
+                        <div class="checkList_dliver_choInfoDetail">
+                            <label class="shopName">
+                                
+                            <input type="radio" name="shipment_address" value="西華門市" class="shopAddress_radio"> 西華門市
+                                
+                            </label>
+                            <div class="checkList_dliver_shopAddress">
+                                <p>106台北市大安區復興南路二段203號</p>
+                                <div class="checkList_dliver_shopReceiver">
+                                    <span>簡峰峰</span>
+                                    <span>(+886)987654321</span>
+                                </div>
                             </div>
                         </div>
+                        <button class="checkList_btn"><a href="">選擇門市</a></button>
                     </div>
-                    <button class="checkList_btn"><a href="">選擇門市</a></button>
-                </div>
-            </div>
-
-            <div class="checkList_deliver_cho">
-                <div class="checkList_deliver_choName">
-                    <label class="checkList_shopChoName">
-                        <input type="radio" name="deliver" value="hiLife"> 萊爾富
-                    </label>
-                    <p data-price="60">+ NT. 60</p>
                 </div>
 
-                <div class="checkList_dliver_choInfo checkList_choInfo">
-                    <div class="checkList_dliver_choInfoDetail">
-                        <label class="shopName">
-                            <input type="radio" name="shopAddress" value="某某門市" class="shopAddress_radio"> 某某門市
+                <div class="checkList_deliver_cho">
+                    <div class="checkList_deliver_choName">
+                        <label class="checkList_shopChoName">
+
+                            <input type="radio" name="shipment_method" value="hiLife"> 萊爾富
+                            
                         </label>
-                        <div class="checkList_dliver_shopAddress">
-                            <p>106台北市大安區復興南路二段203號</p>
-                            <div class="checkList_dliver_shopReceiver">
-                                <span>簡峰峰</span>
-                                <span>(+886)987654321</span>
+                        <p data-price="60">+ NT. 60</p>
+                    </div>
+
+                    <div class="checkList_dliver_choInfo checkList_choInfo">
+                        <div class="checkList_dliver_choInfoDetail">
+                            <label class="shopName">
+                                
+                                <input type="radio" name="shipment_address" value="德欣門市" class="shopAddress_radio"> 德欣門市
+                                
+                            </label>
+                            <div class="checkList_dliver_shopAddress">
+                                <p>106台北市大安區復興南路二段203號</p>
+                                <div class="checkList_dliver_shopReceiver">
+                                    <span>簡峰峰</span>
+                                    <span>(+886)987654321</span>
+                                </div>
                             </div>
                         </div>
+                        <button class="checkList_btn"><a href="">選擇門市</a></button>
                     </div>
-                    <button class="checkList_btn"><a href="">選擇門市</a></button>
-                </div>
-            </div>
-
-            <div class="checkList_deliver_cho">
-                <div class="checkList_deliver_choName">
-                    <label class="checkList_shopChoName">
-                        <input type="radio" name="deliver" value="home"> 宅配
-                    </label>
-                    <p data-price="100">+ NT. 100</p>
                 </div>
 
-                <div class="checkList_dliver_choInfo checkList_choInfo">
-                    <form>
-                        <input type="text" name="name" placeholder="地址" size="30">
-                        <br>
-                        <input type="text" name="phone" placeholder="收件人">
-                        <input type="text" name="address" placeholder="聯絡電話">
-                    </form>
+                <div class="checkList_deliver_cho">
+                    <div class="checkList_deliver_choName">
+                        <label class="checkList_shopChoName">
+                            
+                            <input type="radio" name="shipment_method" value="delivery" id="deliveryRadio"> 宅配
+                            
+                        </label>
+                        <p data-price="100">+ NT. 100</p>
+                    </div>
+
+                    <div class="checkList_dliver_choInfo checkList_choInfo">
+                        
+                            <input type="text" name="shipment_address" placeholder="地址" size="30" id="deli_address">
+                            <br>
+                            <input type="text" name="shipment_reciver" placeholder="收件人">
+                            <input type="text" name="shipment_reciver_phone" placeholder="聯絡電話">
+                        
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
 
@@ -190,39 +208,41 @@ $order_id = date("YmdHis").substr(microtime(),2,4);
         <div class="checkList_info">選擇付款方式</div>
 
         <div class="checkList_payContent">
-            <div class="checkList_pay_cho">
-                <label class="checkList_payMethod"><input type="radio" name="pay" value="bysent" checked>
-                    貨到付款</label>
-            </div>
+                <div class="checkList_pay_cho">
+                    <label class="checkList_payMethod">
+                        
+                        <input type="radio" name="payment_method" value="貨到付款" id="arrivePayRadio" checked>
+                        貨到付款
 
-            <div class="checkList_pay_cho">
-                <label class="checkList_payMethod"><input type="radio" name="pay" value="bycredit" id="creditRadio"> 信用卡 / 金融卡</label>
-
-                <div class="checkList_pay_choInfo checkList_choInfo">
-                    <p class="checkList_importment">*為必填</p>
-                    <form class="creditForm">
-                        <label>*請輸入卡號:
-                            <input class="cardNum" type="text" name="cardnum-p1" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">-
-                            <input class="cardNum" type="text" name="cardnum-p2" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">-
-                            <input class="cardNum" type="text" name="cardnum-p3" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">-
-                            <input class="cardNum" type="text" name="cardnum-p4" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">
-                        </label>
-                        <br />
-                        <label>*持卡人姓名:
-                            <input class="cardName" type="text" name="cardName">
-                        </label>
-                        <br />
-                        <label>*安全碼:
-                            <input class="cardSafeNum" type="text" name="cardSafeNum" maxlength="3" size="3" oninput="value=value.replace(/[^\d]/g,'')">
-                        </label>
-                        <br />
-                        <label>*到期日:
-                            <input class="cardDate" type="text" name="cardDate" maxlength="2" size="2" oninput="value=value.replace(/[^\d]/g,'')"> /
-                            <input class="cardDate" type="text" name="cardDate" maxlength="2" size="2" oninput="value=value.replace(/[^\d]/g,'')">
-                        </label>
-                    </form>
+                    </label>
                 </div>
-            </div>
+
+                <div class="checkList_pay_cho">
+                    <label class="checkList_payMethod"><input type="radio" name="payment_method" value="信用卡付款" id="creditRadio"> 信用卡 / 金融卡</label>
+
+                    <div class="checkList_pay_choInfo checkList_choInfo">
+                        <p class="checkList_importment">*為必填</p>
+                            <label>*請輸入卡號:
+                                <input class="cardNum" type="text" name="cardnum-p1" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">-
+                                <input class="cardNum" type="text" name="cardnum-p2" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">-
+                                <input class="cardNum" type="text" name="cardnum-p3" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">-
+                                <input class="cardNum" type="text" name="cardnum-p4" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">
+                            </label>
+                            <br />
+                            <label>*持卡人姓名:
+                                <input class="cardName" type="text" name="cardName">
+                            </label>
+                            <br />
+                            <label>*安全碼:
+                                <input class="cardSafeNum" type="text" name="cardSafeNum" maxlength="3" size="3" oninput="value=value.replace(/[^\d]/g,'')">
+                            </label>
+                            <br />
+                            <label>*到期日:
+                                <input class="cardDate" type="text" name="cardDate" maxlength="2" size="2" oninput="value=value.replace(/[^\d]/g,'')"> /
+                                <input class="cardDate" type="text" name="cardDate" maxlength="2" size="2" oninput="value=value.replace(/[^\d]/g,'')">
+                            </label>
+                    </div>
+                </div>
         </div>
 
     </div>
@@ -249,9 +269,9 @@ $order_id = date("YmdHis").substr(microtime(),2,4);
     
     
     <div class="checkList_finBtn">
-        <button class="checkList_btn" data-target="#finishOrder" id="orderbtn" onclick="requireData()">確認下訂</button>
+        <button type="submit" class="checkList_btn" data-target="#finishOrder" id="orderbtn" onclick="requireData()">確認下訂</button>
     </div>
-
+</form>
 </div>
 
 <!-- finishOrder -->
@@ -358,12 +378,53 @@ const dallorCommas = function(n){
         
         });
 
-
-
         
    });
 
-        
+
+   function checkForm() {
+        // 回復原來的狀態
+        // fileds.forEach(el=>{
+        //     el.css('border', '1px solid #CCCCCC');
+        //     el.next().text('');
+        // });
+
+        let isPass = true;
+
+        // if($name.val().length < 2){
+        //     isPass = false;
+        //     $name.css('border', '1px solid red');
+        //     $name.next().text('請輸入正確的姓名');
+        // }
+        // if(! email_re.test($email.val())){
+        //     isPass = false;
+        //     $email.css('border', '1px solid red');
+        //     $email.next().text('請輸入正確的 email');
+        // }
+        // if(! mobile_re.test($mobile.val())){
+        //     isPass = false;
+        //     $mobile.css('border', '1px solid red');
+        //     $mobile.next().text('請輸入正確的手機號碼');
+        // }
+
+        if(isPass){
+            $.post(
+                'test-api.php',
+                $(document.form1).serialize(),
+                function(data){
+                    if(data.success){
+                        alert('訂單已送出');
+                    } else {
+                        console.log('資料沒有送出')
+                        alert(data.error);
+                    }
+                },
+                'json'
+            )
+        }
+
+    }
+
 
 </script>
 <?php include __DIR__ . '/connect_parts/html-foot.php' ?>
