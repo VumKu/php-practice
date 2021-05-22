@@ -334,6 +334,11 @@
             margin: 0 10px;
         }
 
+        /* 警示小標語 */
+        .form-text{
+            color: red;
+        }
+
         /* 桌機用 */
         @media (min-width:1400px) {
             .breadcrumb_style {

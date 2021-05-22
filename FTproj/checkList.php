@@ -9,6 +9,52 @@ $pageName = 'check_list & payment method';
 $order_id = date("YmdHis").substr(microtime(),2,4);
 
 
+$_SESSION = [
+    'cart' => [
+        'products' => [
+            [
+                'name' => '平安茶',
+                'attr' => '一組24包',
+                'price' => '240',
+                'qty' => '1'
+            ],
+            [
+                'name' => '皮革平安符',
+                'attr' => '藍色',
+                'price' => '200',
+                'qty' => '1'
+            ]
+        ],
+        'trip' => [
+            [
+                'name' => '北港媽祖廟一日遊',
+                'attr' => '一日遊，含午餐',
+                'price' => '888',
+                'qty' => '1'
+            ]
+        ],
+        'light' => [
+            [
+                'name' => '光明燈',
+                'attr' => '',
+                'price' => '600',
+                'qty' => '2'
+            ]
+        ],
+
+    ],
+    'user' => [
+        'id' => 'alice1234',
+    ],
+
+    ];
+
+
+        
+
+
+
+
 ?>
 
 
@@ -51,7 +97,7 @@ $order_id = date("YmdHis").substr(microtime(),2,4);
 
         <!-- Trip -->
         <!-- PHP變數待調整 -->
-        <?php foreach ($_SESSION['cart']['plan'] as $j) : ?>
+        <?php foreach ($_SESSION['cart']['trip'] as $j) : ?>
             <div class="checkList_item checkList_trip">
                 <div class="checkList_itemImgBox">
                     <img src="./img/indexproduct(2).jpg" alt="">
@@ -96,7 +142,7 @@ $order_id = date("YmdHis").substr(microtime(),2,4);
                     <div class="checkList_deliver_choName">
 
                         <label class="checkList_shopChoName">
-                            <input type="radio" name="shipment_method" value="7-11" class="shopRadio"> 711
+                            <input type="radio" name="shipment_method" value="7-11" class="shopRadio" checked> 711
                         </label>
 
                         <p data-price="60">+ NT. 60</p>
@@ -177,17 +223,23 @@ $order_id = date("YmdHis").substr(microtime(),2,4);
                         <p data-price="100">+ NT. 100</p>
                     </div>
 
-                    <div class="checkList_dliver_choInfo checkList_choInfo deliveryInfo">
-                        <label class="shopName">
-                            <input type="radio" name="shipment_shipName" value="宅配" class="shopAddress_radio"> 收件地址
-                                                
-                            <p class="checkList_importment">*以下皆為必填資訊</p>
-                        
-                            <input type="text" name="shipment_address" placeholder="地址" size="30" id="deli_address">
-                            <br>
-                            <input type="text" name="shipment_reciver" placeholder="收件人">
-                            <input type="text" name="shipment_reciver_phone" placeholder="聯絡電話">
-                        </label>
+                    <div class="checkList_dliver_choInfo checkList_choInfo">
+                        <div class="checkList_dliver_choInfoDetail">
+                            <label class="shopName">
+                                <input type="radio" name="shipment_shipName" value="宅配" class="shopAddress_radio"> 收件地址
+                                                    
+                                <p class="checkList_importment">*以下皆為必填資訊</p>
+
+                                <div class="deliveryInfo">
+                                    <input type="text" name="shipment_reciver" placeholder="收件人">
+                                    <small class="form-text error"></small>
+                                    <input type="text" name="shipment_reciver_phone" placeholder="聯絡電話">
+                                    <small class="form-text error"></small>
+                                    <input type="text" name="shipment_address" placeholder="地址" size="30" id="deli_address">
+                                    <small class="form-text error"></small>
+                                </div>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -200,12 +252,15 @@ $order_id = date("YmdHis").substr(microtime(),2,4);
 
             <div class="checkList_payContent">
                 <div class="checkList_pay_cho">
-                    <label class="checkList_payMethod"><input type="radio" name="payment_method" value="貨到付款" id="arrivePayRadio" checked>
-                        貨到付款</label>
+                    <label class="checkList_payMethod">
+                        <input type="radio" name="payment_method" value="貨到付款" id="arrivePayRadio" checked>貨到付款
+                    </label>
                 </div>
 
                 <div class="checkList_pay_cho">
-                    <label class="checkList_payMethod"><input type="radio" name="payment_method" value="信用卡付款" id="creditRadio"> 信用卡 / 金融卡</label>
+                    <label class="checkList_payMethod">
+                        <input type="radio" name="payment_method" value="信用卡付款" id="creditRadio"> 信用卡 / 金融卡
+                    </label>
 
                     <div class="checkList_pay_choInfo checkList_choInfo">
                         <p class="checkList_importment">*為必填</p>
@@ -215,19 +270,23 @@ $order_id = date("YmdHis").substr(microtime(),2,4);
                                 <input class="cardNum" type="text" name="cardnum-p2" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">-
                                 <input class="cardNum" type="text" name="cardnum-p3" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">-
                                 <input class="cardNum" type="text" name="cardnum-p4" maxlength="4" size="4" oninput="value=value.replace(/[^\d{4}]/g,'')">
+                                <small class="form-text error"></small>
                             </label>
                             <br />
                             <label>*持卡人姓名:
                                 <input class="cardName" type="text" name="cardName">
+                                <small class="form-text error"></small>
                             </label>
                             <br />
                             <label>*安全碼:
                                 <input class="cardSafeNum" type="text" name="cardSafeNum" maxlength="4" size="4" oninput="value=value.replace(/[^\d]/g,'')" placeholder="CSC">
+                                <small class="form-text error"></small>
                             </label>
                             <br />
                             <label>*到期日:
                                 <input class="cardDate" type="text" name="cardDateMM" maxlength="2" size="2" oninput="value=value.replace(/[^\d]/g,'')" placeholder="MM"> /
                                 <input class="cardDate" type="text" name="cardDateYY" maxlength="2" size="2" oninput="value=value.replace(/[^\d]/g,'')" placeholder="YY">
+                                <small class="form-text error"></small>
                             </label>
                         
                     </div>
@@ -367,8 +426,15 @@ $order_id = date("YmdHis").substr(microtime(),2,4);
    });
 
 
+    
+    
+
 
    function checkForm() {
+
+    
+
+         
 
         let isPass = true;
 
@@ -377,12 +443,12 @@ $order_id = date("YmdHis").substr(microtime(),2,4);
                 'test-api.php',
                 $(document.form1).serialize(),
                 function(data){
-                    if(data.success){
-                        alert('訂單已送出');
-                    } else {
-                        // console.log('資料沒有送出')
-                        alert(data.error);
-                    }
+                    // if(data.success){
+                    //     alert('訂單已送出');
+                    // } else {
+                    //     // console.log('資料沒有送出')
+                    //     alert(data.error);
+                    // }
                 },
                 'json'
             )
