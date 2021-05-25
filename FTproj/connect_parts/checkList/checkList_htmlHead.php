@@ -82,7 +82,7 @@
 
         .checkList_prod_cate p {
             /* 有一樣的寬度，這樣下面才會對齊title */
-            width: 80px;
+            width: 100px;
             text-align: center;
 
             font-size: 18px;
@@ -132,8 +132,10 @@
         }
 
         .checkList_itemWordBox p {
-            width: 80px;
+            width: 100px;
             text-align: center;
+
+            /* border: 1px solid red; */
         }
 
         .checkList_subTitle {

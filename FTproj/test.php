@@ -291,7 +291,7 @@ $order_id = date("YmdHis").substr(microtime(),2,4);
                 </div>
                 <div class="modal-orderNum">
                     <span>訂單編號:</span>
-                    <span><?= $order_id ?></span>
+                    <span name="order_id"><?= $order_id ?></span>
                 </div>
             </div>
             <div class="modal-footer modal-footer-re">

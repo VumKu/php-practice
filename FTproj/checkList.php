@@ -5,20 +5,55 @@
 $title = '灣廟 | 結帳確認';
 $pageName = 'check_list & payment method';
 
+// $order_id = (int)$_GET['orderID'];
+
+// $o_sql = "SELECT `order_id` FROM `order_sum`";
+// $oid = $pdo->query($o_sql)->fetchAll();
+// $o_stmt = $pdo -> query($o_sql);
+// $order_id = $o_stmt -> fetch(PDO::FETCH_NUM)[0];
+
 //訂單編號：前8位為日期，剩下取time()結果的後五位
-$order_id = date("YmdHis").substr(microtime(),2,4);
+// $order_id = date("YmdHis").substr(microtime(),2,4);
+
+// $_SESSION['order_id'] = $order_id;
+
+
+// $orderID = $_POST['order_id'];
+// $id_sql = "SELECT * FROM `order_sum` WHERE `order_id`";
+// $id_row = $pdo->query($id_sql)->fetch();
+
+// echo json_encode($id_row);
+
+// $id_sql = "INSERT INTO `order_sum`(
+//     `order_id`
+// ) VALUES (
+//     ?
+// )";
+
+// $id_stmt = $pdo->prepare($id_sql);
+// $id_stmt->execute([
+// $_POST['order_id'],
+// ]);
+
+// $receive_orderID = $_POST['order_id'];
+// echo $receive_orderID;
+
+// $post_orderID = "UPDATE `order_sum` SET `order_id`='[$receive_orderID]'"; 
 
 
 $_SESSION = [
     'cart' => [
+        'order_id' => date("YmdHis").substr(microtime(),2,4),
         'products' => [
             [
+                'sid' => '1',
                 'name' => '平安茶',
                 'attr' => '一組24包',
                 'price' => '240',
                 'qty' => '1'
             ],
             [
+                'sid' => '8',
                 'name' => '皮革平安符',
                 'attr' => '藍色',
                 'price' => '200',
@@ -27,32 +62,47 @@ $_SESSION = [
         ],
         'trip' => [
             [
+                'sid' => '3',
                 'name' => '北港媽祖廟一日遊',
                 'attr' => '一日遊，含午餐',
+                'date' => '6/30',
                 'price' => '888',
                 'qty' => '1'
             ]
         ],
         'light' => [
             [
+                'sid' => '1',
                 'name' => '光明燈',
-                'attr' => '',
+                'attr' => [
+                    'name' => '悠仁',
+                    'gender' => '男',
+                    'birth' => '3月20日',
+                    'address' => '宮城縣仙台市'
+                ],
                 'price' => '600',
-                'qty' => '2'
-            ]
-        ],
-
+                'qty' => '1'
+            ],
+            [
+                'sid' => '6',
+                'name' => '姻緣燈',
+                'attr' =>[
+                    'name' => '憂太',
+                    'gender' => '男',
+                    'birth' => '3月7日',
+                    'address' => '宫城县仙台市'
+                ],
+                'price' => '600',
+                'qty' => '1'
+            ],
+        ]
     ],
+    
     'user' => [
         'id' => 'alice1234',
     ],
 
     ];
-
-
-        
-
-
 
 
 ?>
@@ -121,7 +171,19 @@ $_SESSION = [
                 </div>
                 <div class="checkList_itemWordBox">
                     <p class="checkList_itemName"><?= $k['name'] ?></p>
-                    <p class="checkList_itemAttr"><?= $k['attr'] ?></p>
+                    <p class="checkList_itemAttr">
+                    
+                        <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="right" 
+                        data-content="
+                        
+                        點燈者: <?= $k['attr']['name']?></br>
+                        性別: <?= $k['attr']['gender']?></br>
+                        生辰: <?= $k['attr']['birth']?></br>
+                        住址: <?= $k['attr']['address']?>
+                        
+                        " data-html='true'>查看詳情</button>
+
+                    </p>
                     <p class="checkList_itemPrice" data-price="<?= $k['price'] ?>"></p>
                     <p class="checkList_itemNum" data-qty="<?= $k['qty'] ?>"></p>
                     <p class="checkList_itemTotalP"></p>
@@ -142,7 +204,7 @@ $_SESSION = [
                     <div class="checkList_deliver_choName">
 
                         <label class="checkList_shopChoName">
-                            <input type="radio" name="shipment_method" value="7-11" class="shopRadio" checked> 711
+                            <input type="radio" name="shipment_method" value="7-11" class="shopRadio"> 711
                         </label>
 
                         <p data-price="60">+ NT. 60</p>
@@ -305,7 +367,7 @@ $_SESSION = [
 
                 <div class="checkList_totalPricInfoBox">
                     <p>運費金額</p>
-                    <p class="checkList_shipFee">未選擇配送方式</p>
+                    <p name="shipment_fee" class="checkList_shipFee">未選擇配送方式</p>
                 </div>
 
                 <div class="checkList_totalPricInfoBox">
@@ -317,7 +379,7 @@ $_SESSION = [
         
         
         <div class="checkList_finBtn">
-            <button type="submit" class="checkList_btn" data-target="#finishOrder" id="orderbtn" onclick="requireData()">確認下訂</button>
+            <button type="submit" class="checkList_btn" data-target="#finishOrder" id="orderbtn" onclick="checkForm(); return false;">確認下訂</button>
         </div>
     </form>
 </div>
@@ -339,7 +401,7 @@ $_SESSION = [
                 </div>
                 <div class="modal-orderNum">
                     <span>訂單編號:</span>
-                    <span id="orderId"><?= $order_id ?></span>
+                    <span name="order_id" id="orderID"><?= $_SESSION['cart']['order_id'] ?></span>
                 </div>
             </div>
             <div class="modal-footer modal-footer-re">
@@ -363,6 +425,11 @@ $_SESSION = [
 <?php include __DIR__ . '/connect_parts/checkList/checkList_scripts.php' ?>
 
 <script>
+
+    $(function () {
+    $('[data-toggle="popover"]').popover();
+    });
+
     const dallorCommas = function(n){
             return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     };
@@ -422,21 +489,205 @@ $_SESSION = [
             $('.checkList_orderPrice').text('NTD. ' + orderPrice);
 
         })
+
+
+
+        
+
+
         
    });
+   
 
 
-    
-    
+   // 判斷卡號是否格式正確(所設定的變數)
+   const cardnumP1 = $("input[name='cardnum-p1']"),
+        cardnumP2 = $("input[name='cardnum-p2']"),
+        cardnumP3 = $("input[name='cardnum-p3']"),
+        cardnumP4 = $("input[name='cardnum-p4']");
+
+    // 判斷持卡人是否填寫
+    const creditName = $("input[name='cardName']");
+        
+    // 判斷安全碼是否填寫 & 正確
+    const cardSafeNum = $("input[name='cardSafeNum']");
+
+    // 判斷日期是否填寫 & 正確
+    const cardDateMM = $("input[name='cardDateMM']"),
+        cardDateYY = $("input[name='cardDateYY']");
+
+
+    // 判斷電話號碼格式(所設定的變數)
+    const mobile_re = /^09\d{2}-?\d{3}-?\d{3}$/;
+
+    // 判斷宅配所填內容(所設定的變數)
+    const reciver = $("input[name='shipment_reciver']"),
+        phone = $("input[name='shipment_reciver_phone']"),
+        address = $("#deli_address");
+
+    const fileds1 = [
+        cardnumP1, cardnumP2, cardnumP3, cardnumP4,
+        cardDateMM, cardDateYY
+    ];
+    const fileds2 = [
+        creditName, cardSafeNum
+    ];
+    const fileds3 = [
+        reciver, phone, address
+    ];
+
+
 
 
    function checkForm() {
 
-    
-
-         
+        //如有錯誤部分已被修正，則恢復原來狀態
+        fileds1.forEach(el1=>{
+            el1.css('border','none');
+            el1.css('border-bottom','1px solid #aaa');
+            el1.parent().find('.form-text').text('');
+        });
+        fileds2.forEach(el2=>{
+            el2.css('border','none');
+            el2.css('border-bottom','1px solid #aaa');
+            el2.next().text('');
+        });
+        fileds3.forEach(el3=>{
+            el3.css('border','1px solid #aaa');
+            el3.next().text('');
+        });
 
         let isPass = true;
+
+        let creditRadio = document.getElementById('creditRadio');
+        let arrivePayRadio = document.getElementById('arrivePayRadio');
+        let deliveryRadio = document.getElementById('deliveryRadio');
+            
+
+        if(arrivePayRadio.checked == true){
+
+            // console.log('arrivePay', 'checked');  
+
+                //判斷宅配選項是否有選
+                if (deliveryRadio.checked == true) {
+
+
+                    if (reciver.val() == ""){
+                        isPass = false;
+                        $(reciver).css('border','1px solid red');
+                        $(reciver).next().text('請輸入收件人姓名')
+                    }
+                    else if (! mobile_re.test(phone.val())){
+                        isPass = false;
+                        $(phone).css('border','1px solid red');
+                        $(phone).next().text('請填入正確的手機格式')
+                    }
+                    else if (address.val() == ""){
+                        isPass = false;
+                        $(address).css('border','1px solid red');
+                        $(address).next().text('請輸入收件地址')
+                    }
+                    else{
+                    $('#orderbtn').attr('data-toggle', 'modal')
+                    }
+
+                }
+                else{
+                    $('#orderbtn').attr('data-toggle', 'modal');
+                }      
+        };
+
+
+        if (creditRadio.checked == true) {
+
+            // console.log('cradio', 'checked');
+
+            //判斷宅配選項是否有選
+            if (deliveryRadio.checked == true) {
+
+                    if (reciver.val() == ""){
+                        isPass = false;
+                        $(reciver).css('border','1px solid red');
+                        $(reciver).next().text('請輸入收件人姓名')
+                    }
+                    else if (! mobile_re.test(phone.val())){
+                        isPass = false;
+                        $(phone).css('border','1px solid red');
+                        $(phone).next().text('請填入正確的手機格式')
+                    }
+                    else if (address.val() == ""){
+                        isPass = false;
+                        $(address).css('border','1px solid red');
+                        $(address).next().text('請輸入收件地址')
+                    }
+
+                };
+
+                
+
+            if (cardnumP1.val() == "" || cardnumP1.val().length < 4) {
+                isPass = false;
+                $(cardnumP1).css('border','1px solid red');
+                $(cardnumP1).parent().find('.form-text').text('卡號格式錯誤')
+            }
+
+            else if (cardnumP2.val() == "" || cardnumP2.val().length < 4) {
+                isPass = false;
+                $(cardnumP2).css('border','1px solid red');
+                $(cardnumP2).parent().find('.form-text').text('卡號格式錯誤')
+                // alert("卡號格式錯誤");
+                // return false;
+            }
+            else if (cardnumP3.val() == "" || cardnumP3.val().length < 4) {
+                isPass = false;
+                $(cardnumP3).css('border','1px solid red');
+                $(cardnumP3).parent().find('.form-text').text('卡號格式錯誤')
+                // alert("卡號格式錯誤");
+                // return false;
+            }
+            else if (cardnumP4.val() == "" || cardnumP4.val().length < 4) {
+                isPass = false;
+                $(cardnumP4).css('border','1px solid red');
+                $(cardnumP4).parent().find('.form-text').text('卡號格式錯誤')
+
+                // alert("卡號格式錯誤");
+                // return false;
+            }             
+
+            else if (creditName.val() == "") {
+                isPass = false;
+                $(creditName).css('border','1px solid red');
+                $(creditName).next().text('請輸入持卡人姓名')
+            }
+
+            else if (cardSafeNum.val() == "" || cardSafeNum.val().length < 3) {
+                isPass = false;
+                $(cardSafeNum).css('border','1px solid red');
+                $(cardSafeNum).next().text('請輸入正確的安全碼')
+            }
+
+            else if (cardDateMM.val() == "" || cardDateMM.val().length < 2) {
+                isPass = false;
+                $(cardDateMM).css('border','1px solid red');
+                $(cardDateMM).parent().find('.form-text').text('請輸入正確的到期日')
+            }
+            else if (cardDateYY.val() == "" || cardDateYY.val().length < 2) {
+                isPass = false;
+                $(cardDateYY).css('border','1px solid red');
+                $(cardDateYY).parent().find('.form-text').text('請輸入正確的到期日')
+            }
+
+
+            else {
+                $('#orderbtn').attr('data-toggle', 'modal')
+            }
+            
+
+        };
+    
+         
+
+        // let isPass = true;
 
         if(isPass){
             $.post(
@@ -453,7 +704,6 @@ $_SESSION = [
                 'json'
             )
         }
-
     }
 
         
