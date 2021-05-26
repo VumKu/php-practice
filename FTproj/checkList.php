@@ -73,27 +73,29 @@ $_SESSION = [
         'light' => [
             [
                 'sid' => '1',
-                'name' => '光明燈',
-                'attr' => [
+                'name' => '悠仁',
+                'attr' => '光明燈',
+                'price' => '600',
+                'qty' => '1',
+                'note' => [
                     'name' => '悠仁',
                     'gender' => '男',
                     'birth' => '3月20日',
                     'address' => '宮城縣仙台市'
-                ],
-                'price' => '600',
-                'qty' => '1'
+                ]
             ],
             [
                 'sid' => '6',
-                'name' => '姻緣燈',
-                'attr' =>[
+                'name' => '憂太',
+                'attr' => '平安燈',
+                'price' => '600',
+                'qty' => '1',
+                'note' => [
                     'name' => '憂太',
                     'gender' => '男',
                     'birth' => '3月7日',
                     'address' => '宫城县仙台市'
-                ],
-                'price' => '600',
-                'qty' => '1'
+                ]
             ],
         ]
     ],
@@ -118,11 +120,13 @@ $_SESSION = [
 
     <div class="checkList_prod_cate">
         <div class="checkList_prod_cateBox">
+            <p></p>
             <p>商品名稱</p>
             <p>選項</p>
             <p>單價</p>
             <p>數量</p>
             <p>總價</p>
+            <p>備註</p>
         </div>
     </div>
 
@@ -141,6 +145,7 @@ $_SESSION = [
                     <p class="checkList_itemPrice" data-price="<?= $i['price'] ?>"></p>
                     <p class="checkList_itemNum" data-qty="<?= $i['qty'] ?>"></p>
                     <p class="checkList_itemTotalP"></p>
+                    <p class="checkList_itemNote"></p>
                 </div>
             </div>
         <?php endforeach; ?>
@@ -158,6 +163,7 @@ $_SESSION = [
                     <p class="checkList_itemPrice" data-price="<?= $j['price'] ?>"></p>
                     <p class="checkList_itemNum" data-qty="<?= $j['qty'] ?>"></p>
                     <p class="checkList_itemTotalP"></p>
+                    <p class="checkList_itemNote"></p>
                 </div>
             </div>
         <?php endforeach; ?>
@@ -171,22 +177,23 @@ $_SESSION = [
                 </div>
                 <div class="checkList_itemWordBox">
                     <p class="checkList_itemName"><?= $k['name'] ?></p>
-                    <p class="checkList_itemAttr">
-                    
-                        <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="right" 
+                    <p class="checkList_itemAttr"><?= $k['attr'] ?></p>
+                    <p class="checkList_itemPrice" data-price="<?= $k['price'] ?>"></p>
+                    <p class="checkList_itemNum" data-qty="<?= $k['qty'] ?>"></p>
+                    <p class="checkList_itemTotalP"></p>
+                    <p class="checkList_itemNote">
+
+                    <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="right" 
                         data-content="
                         
-                        點燈者: <?= $k['attr']['name']?></br>
-                        性別: <?= $k['attr']['gender']?></br>
-                        生辰: <?= $k['attr']['birth']?></br>
-                        住址: <?= $k['attr']['address']?>
+                        點燈者: <?= $k['note']['name']?></br>
+                        性別: <?= $k['note']['gender']?></br>
+                        生辰: <?= $k['note']['birth']?></br>
+                        住址: <?= $k['note']['address']?>
                         
                         " data-html='true'>查看詳情</button>
 
                     </p>
-                    <p class="checkList_itemPrice" data-price="<?= $k['price'] ?>"></p>
-                    <p class="checkList_itemNum" data-qty="<?= $k['qty'] ?>"></p>
-                    <p class="checkList_itemTotalP"></p>
                 </div>
             </div>
         <?php endforeach; ?>
@@ -577,22 +584,22 @@ $_SESSION = [
                         $(reciver).css('border','1px solid red');
                         $(reciver).next().text('請輸入收件人姓名')
                     }
-                    else if (! mobile_re.test(phone.val())){
+                    if (! mobile_re.test(phone.val())){
                         isPass = false;
                         $(phone).css('border','1px solid red');
                         $(phone).next().text('請填入正確的手機格式')
                     }
-                    else if (address.val() == ""){
+                    if (address.val() == ""){
                         isPass = false;
                         $(address).css('border','1px solid red');
                         $(address).next().text('請輸入收件地址')
                     }
-                    else{
+                    if (isPass){
                     $('#orderbtn').attr('data-toggle', 'modal')
                     }
 
                 }
-                else{
+                if (isPass){
                     $('#orderbtn').attr('data-toggle', 'modal');
                 }      
         };
@@ -610,12 +617,12 @@ $_SESSION = [
                         $(reciver).css('border','1px solid red');
                         $(reciver).next().text('請輸入收件人姓名')
                     }
-                    else if (! mobile_re.test(phone.val())){
+                    if (! mobile_re.test(phone.val())){
                         isPass = false;
                         $(phone).css('border','1px solid red');
                         $(phone).next().text('請填入正確的手機格式')
                     }
-                    else if (address.val() == ""){
+                    if (address.val() == ""){
                         isPass = false;
                         $(address).css('border','1px solid red');
                         $(address).next().text('請輸入收件地址')
@@ -631,21 +638,21 @@ $_SESSION = [
                 $(cardnumP1).parent().find('.form-text').text('卡號格式錯誤')
             }
 
-            else if (cardnumP2.val() == "" || cardnumP2.val().length < 4) {
+            if (cardnumP2.val() == "" || cardnumP2.val().length < 4) {
                 isPass = false;
                 $(cardnumP2).css('border','1px solid red');
                 $(cardnumP2).parent().find('.form-text').text('卡號格式錯誤')
                 // alert("卡號格式錯誤");
                 // return false;
             }
-            else if (cardnumP3.val() == "" || cardnumP3.val().length < 4) {
+            if (cardnumP3.val() == "" || cardnumP3.val().length < 4) {
                 isPass = false;
                 $(cardnumP3).css('border','1px solid red');
                 $(cardnumP3).parent().find('.form-text').text('卡號格式錯誤')
                 // alert("卡號格式錯誤");
                 // return false;
             }
-            else if (cardnumP4.val() == "" || cardnumP4.val().length < 4) {
+            if (cardnumP4.val() == "" || cardnumP4.val().length < 4) {
                 isPass = false;
                 $(cardnumP4).css('border','1px solid red');
                 $(cardnumP4).parent().find('.form-text').text('卡號格式錯誤')
@@ -654,31 +661,31 @@ $_SESSION = [
                 // return false;
             }             
 
-            else if (creditName.val() == "") {
+            if (creditName.val() == "") {
                 isPass = false;
                 $(creditName).css('border','1px solid red');
                 $(creditName).next().text('請輸入持卡人姓名')
             }
 
-            else if (cardSafeNum.val() == "" || cardSafeNum.val().length < 3) {
+            if (cardSafeNum.val() == "" || cardSafeNum.val().length < 3) {
                 isPass = false;
                 $(cardSafeNum).css('border','1px solid red');
                 $(cardSafeNum).next().text('請輸入正確的安全碼')
             }
 
-            else if (cardDateMM.val() == "" || cardDateMM.val().length < 2) {
+            if (cardDateMM.val() == "" || cardDateMM.val().length < 2) {
                 isPass = false;
                 $(cardDateMM).css('border','1px solid red');
                 $(cardDateMM).parent().find('.form-text').text('請輸入正確的到期日')
             }
-            else if (cardDateYY.val() == "" || cardDateYY.val().length < 2) {
+            if (cardDateYY.val() == "" || cardDateYY.val().length < 2) {
                 isPass = false;
                 $(cardDateYY).css('border','1px solid red');
                 $(cardDateYY).parent().find('.form-text').text('請輸入正確的到期日')
             }
 
 
-            else {
+            if (isPass) {
                 $('#orderbtn').attr('data-toggle', 'modal')
             }
             

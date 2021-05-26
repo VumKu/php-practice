@@ -26,6 +26,10 @@ $output = [
 
 if(isset($_POST['shipment_method']) ){
 
+    //訂單編號
+    $_POST['order_id'] = $_SESSION['cart']['order_id'];
+
+    //商品總金額
     $pdc_total = 0;
     foreach($_SESSION['cart']['products'] as $i) {
         $pdc_total += $i['price'] * $i['qty'];
@@ -41,14 +45,17 @@ if(isset($_POST['shipment_method']) ){
     
     $product_totalPrice = $pdc_total + $trip_total + $lit_total;
 
-    // var_dump($_POST);
+    //運費計算
+    $shipment_fee = 0;
+    if ($_POST['shipment_method'] == 'delivery' ){
+        $shipment_fee = 100;
+    }
+    else{
+        $shipment_fee = 60;
+    }
 
-    $_POST['order_id'] = $_SESSION['cart']['order_id'];
-
-//測試用
-// $product_totalPrice = 900;
-$shipment_fee = 60;
-$order_totalPrice = $product_totalPrice + $shipment_fee;
+    //訂單總金額
+    $order_totalPrice = $product_totalPrice + $shipment_fee;
 
 //order_sum
 $o_sql = "INSERT INTO `order_sum`(

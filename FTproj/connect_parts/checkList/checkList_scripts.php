@@ -106,18 +106,6 @@
 
         $('#orderbtn').on('click', function() {
 
-
-
-            // let order_id = 
-
-            // JSON.stringify( order_id ); 
-            // let obj = JSON.parse(order_id);
-            // console.log(typeof order_id);
-
-
-            // $('#orderID').html(orderID);
-
-
             // $.get(
             //     'test-api.php',
             //     function(data){
@@ -135,7 +123,8 @@
                 // dataType: "json",
                 method: "POST",
                 data:{
-                    order_id: $("#orderID").html()
+                    order_id: $("#orderID").html(),
+                    // shipment_fee: $(".checkList_shipFee").html()
                 },
                 error:function(){
                     alert("失敗");
@@ -145,7 +134,7 @@
                     // console.log(order_id);
                     console.log(data);
                     // $("#orderID").html(order_id);
-                    alert("成功");
+                    // alert("成功");
                 } 
             });
 

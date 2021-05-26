@@ -68,13 +68,13 @@
 
         .checkList_prod_cate {
             display: flex;
-            justify-content: flex-end;
+            justify-content: center;
 
             /* border: 1px solid red; */
         }
 
         .checkList_prod_cateBox {
-            width: 75%;
+            width: 100%;
             display: flex;
             justify-content: space-around;
             /* border: 1px solid red; */
@@ -100,7 +100,7 @@
 
         .checkList_item {
             display: flex;
-            justify-content: flex-end;
+            justify-content: center;
             margin: 20px 0;
 
             /* padding: 0 100px; */
@@ -123,7 +123,7 @@
         }
 
         .checkList_itemWordBox {
-            width: 75%;
+            width: 100%;
             display: flex;
             justify-content: space-around;
             align-items: center;
@@ -343,12 +343,7 @@
 
         /* 桌機用 */
         @media (min-width:1400px) {
-            .breadcrumb_style {
-                /* navbar多厚 就推多少paddding */
-                /* 玳禎navbar桌機版 無填滿 這邊請填滿105px */
-                /* padding-top: 105px; */
-            }
-
+            
             .breadcrumb_style_1 {
                 width: 80%;
             }
